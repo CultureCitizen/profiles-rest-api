@@ -16,6 +16,7 @@ Vagrant.configure("2") do |config|
  #freeze the version to a date
  config.vm.box_version = "~> 20200304.0.0"
 
+ #make ports avaliable . Host = laptop , guest : vbox
  config.vm.network "forwarded_port", guest: 8000, host: 8000
 
  config.vm.provision "shell", inline: <<-SHELL
