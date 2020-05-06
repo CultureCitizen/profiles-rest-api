@@ -26,6 +26,8 @@ class UserProfileManager(BaseUserManager):
         user = self.create_user(email,name,password)
         user.is_superuser = True
         user.is_staff = True
+        user.sex = 'M'
+        user.birth_year = 0
         user.save(using=self._db)
 
         return user
@@ -39,8 +41,8 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default = True)
     is_staff = models.BooleanField(default = False)
-    #birth_year = models.IntegerField()
-    #sex = models.CharField(max_length=1 ,choices = SEX_CHOICES )
+    birth_year = models.IntegerField(default = 0)
+    sex = models.CharField(max_length=1 ,default = 'M', choices = SEX_CHOICES )
 
     objects = UserProfileManager()
 

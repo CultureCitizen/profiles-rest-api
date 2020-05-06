@@ -5,9 +5,12 @@ from rest_framework.response import Response
 #status from the api
 from rest_framework import status
 from rest_framework import viewsets
+from rest_framework.authentication import TokenAuthentication
 
 
 from profiles_api import serializers
+from profiles_api import models
+from profiles_api import permissions
 
 
 class HelloApiView(APIView):
@@ -96,3 +99,12 @@ class HelloViewSet(viewsets.ViewSet):
     def destroy(self,request,pk=None):
         """handle removing an object"""
         return Response({'http_method':'DELETE'})
+
+class UserProfileViewSet(viewsets.ModelViewSet):
+    """Handle creating and updating profiles"""
+    serializer_class = serializers.UserProfilesSerializer
+    queryset = models.UserProfile.objects.all()
+    #The , at the end is to ensure the creation of a tuple and not a single
+    #item
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permissions.UpdateOwnProfile,)
