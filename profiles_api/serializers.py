@@ -8,6 +8,16 @@ class HelloSerializer(serializers.Serializer):
     #whenever you are making a put / post / patch , expect an input with name(length=10)
     name = serializers.CharField(max_length=10)
 
+class ProfileFeedItemSerializer(serializers.ModelSerializer):
+    """Serializers profile feed items"""
+
+    class Meta:
+        model = models.ProfileFeedItem
+        fields = ('id','user_profile','status_text','created_on')
+        #the user profile field must be readonly
+        extra_kwargs = {
+            'user_profile':{'read_only':True}
+        }
 
 class UserProfilesSerializer(serializers.ModelSerializer):
     """Serializes a user profile object"""
